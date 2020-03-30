@@ -1,9 +1,8 @@
 import java.util.HashMap;
-import java.util.Map;
 
 public class RomanCalculator {
 
-    private static final Map<Integer, Integer> romanCodes = new HashMap<Integer, Integer>() {
+    private static final HashMap<Integer, Integer> ROMANCODES = (new HashMap<Integer, Integer>() {
         {
             put((int) 'I', 1);
             put((int) 'V', 5);
@@ -13,28 +12,27 @@ public class RomanCalculator {
             put((int) 'D', 500);
             put((int) 'M', 1000);
         }
-    };
+    });
 
     int roman2Arabic(String roman) {
         int arabic = 0;
-        int previosChar = 0;
+        int previous = 0;
 
-        int[] romanInInt = roman.toUpperCase()
-            .codePoints()
-            .map(romanCodes::get)
-            .toArray();
+        int[] romanInInt = roman.toUpperCase().codePoints().map(ROMANCODES::get).toArray();
 
         for (int i = romanInInt.length - 1; i >= 0; i--) {
-            if (previosChar > romanInInt[i]) {
+            if (previous > romanInInt[i]) {
                 arabic -= romanInInt[i];
-                previosChar = 0;    // fixme: delete this line after check input syntax
+                previous = 0;    // fixme: delete this line after check input syntax
             } else {
                 arabic += romanInInt[i];
-                previosChar = romanInInt[i];
+                previous = romanInInt[i];
             }
         }
         return arabic;
     }
+
+
 
 
 //    todo in future: convert to roman
