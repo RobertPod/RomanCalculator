@@ -1,6 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class RomanCalculatorTest {
@@ -13,6 +15,7 @@ class RomanCalculatorTest {
     }
 
     @Test
+    @Tag("shouldIGive1")
     void shouldIGive1() {
         // when
         String roman = "I";
@@ -37,14 +40,6 @@ class RomanCalculatorTest {
     }
 
     @Test
-    void shouldIGive5() {
-        // when
-        String roman = "V";
-        // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(5);
-    }
-
-    @Test
     void shouldIGive4() {
         // when
         String roman = "IV";
@@ -53,11 +48,19 @@ class RomanCalculatorTest {
     }
 
     @Test
-    void shouldIGive10() {
+    void shouldIGive5() {
         // when
-        String roman = "X";
+        String roman = "V";
         // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(10);
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(5);
+    }
+
+    @Test
+    void shouldIGive8() {
+        // when
+        String roman = "VIII";
+        // then
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(8);
     }
 
     @Test
@@ -69,11 +72,11 @@ class RomanCalculatorTest {
     }
 
     @Test
-    void shouldIGive50() {
+    void shouldIGive10() {
         // when
-        String roman = "L";
+        String roman = "X";
         // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(50);
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(10);
     }
 
     @Test
@@ -85,27 +88,27 @@ class RomanCalculatorTest {
     }
 
     @Test
-    void shouldIGive90() {
-        // when
-        String roman = "XC";
-        // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(90);
-    }
-
-    @Test
-    void shouldIGive100() {
-        // when
-        String roman = "C";
-        // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(100);
-    }
-
-    @Test
     void shouldIGive44() {
         // when
         String roman = "XLIV";
         // then
         assertThat(calculator.roman2Arabic(roman)).isEqualTo(44);
+    }
+
+    @Test
+    void shouldIGive50() {
+        // when
+        String roman = "L";
+        // then
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(50);
+    }
+
+    @Test
+    void shouldIGive90() {
+        // when
+        String roman = "XC";
+        // then
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(90);
     }
 
     @Test
@@ -117,11 +120,27 @@ class RomanCalculatorTest {
     }
 
     @Test
+    void shouldIGive100() {
+        // when
+        String roman = "C";
+        // then
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(100);
+    }
+
+    @Test
     void shouldIGive999() {
         // when
         String roman = "CMXCIX";
         // then
         assertThat(calculator.roman2Arabic(roman)).isEqualTo(999);
+    }
+
+    @Test
+    void shouldIGive1959() {
+        // when
+        String roman = "MCMLIX";
+        // then
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(1959);
     }
 
     @Test
@@ -133,10 +152,18 @@ class RomanCalculatorTest {
     }
 
     @Test
-    void shouldIGive1959() {
+    void shouldIGive2848() {
         // when
-        String roman = "MCMLIX";
+        String roman = "MmdCcCXlViii";
         // then
-        assertThat(calculator.roman2Arabic(roman)).isEqualTo(1959);
+        assertThat(calculator.roman2Arabic(roman)).isEqualTo(2848);
+    }
+
+    @Test
+    void shouldIGiveNullPointerException() {
+        // when
+        String roman = "MmdaCcCXlVii";
+        // then
+        assertThrows(NullPointerException.class, () -> calculator.roman2Arabic(roman));
     }
 }

@@ -1,62 +1,48 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class RomanCalculator {
 
-    String add(String ingredientI, String ingredientII) {
-        return "";
-    }
+    private static final Map<Integer, Integer> romanCodes = new HashMap<Integer, Integer>() {
+        {
+            put((int) 'I', 1);
+            put((int) 'V', 5);
+            put((int) 'X', 10);
+            put((int) 'L', 50);
+            put((int) 'C', 100);
+            put((int) 'D', 500);
+            put((int) 'M', 1000);
+        }
+    };
 
     int roman2Arabic(String roman) {
-
-        char[] romanChars = roman.toCharArray();
-        int romanLen = romanChars.length;
         int arabic = 0;
         int previosChar = 0;
 
-        for (int i = romanLen - 1; i >= 0; i--) {
-            if ('I' == romanChars[i]) {
-                if (previosChar > 1) {
-                    arabic -= 1;
-                } else {
-                    arabic += 1;
-                }
-            }
-            if ('V' == romanChars[i]) {
-                arabic += 5;
-                previosChar = 5;
-            }
-            if ('X' == romanChars[i]) {
-                if (previosChar > 10) {
-                    arabic -= 10;
-                } else {
-                    arabic += 10;
-                    previosChar = 10;
-                }
-            }
-            if ('L' == romanChars[i]) {
-                arabic += 50;
-                previosChar = 50;
-            }
-            if ('C' == romanChars[i]) {
-                if (previosChar > 100) {
-                    arabic -= 100;
-                } else {
-                    arabic += 100;
-                    previosChar = 100;
-                }
-            }
-            if ('D' == romanChars[i]) {
-                arabic += 500;
-                previosChar = 500;
-            }
-            if ('M' == romanChars[i]) {
-                arabic += 1000;
-                previosChar = 1000;
+        int[] romanInInt = roman.toUpperCase()
+            .codePoints()
+            .map(romanCodes::get)
+            .toArray();
+
+        for (int i = romanInInt.length - 1; i >= 0; i--) {
+            if (previosChar > romanInInt[i]) {
+                arabic -= romanInInt[i];
+                previosChar = 0;    // fixme: delete this line after check input syntax
+            } else {
+                arabic += romanInInt[i];
+                previosChar = romanInInt[i];
             }
         }
         return arabic;
     }
 
-    String arabic2Roman(int arabic) {
-        return "";
-    }
 
+//    todo in future: convert to roman
+//    String arabic2Roman(int arabic) {
+//        return "";
+//    }
+//    todo in future: standard calculator
+//    String add(String ingredientI, String ingredientII) {
+//        return "";
+//    }
 }
